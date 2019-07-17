@@ -6,7 +6,8 @@
 
 ```
 $ cp hosts.example hosts
-$ ansible-playbook playbook-dev.yml
+$ vim hosts # and change the dev-vm IP
+$ ansible-playbook -i hosts playbook-dev.yml
 ```
 
 ## ???production??? usage
