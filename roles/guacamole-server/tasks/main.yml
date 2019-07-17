@@ -1,0 +1,64 @@
+---
+
+- name: Install packages for Guacamole server runtime deps
+  apt:
+    name:
+      - xorg
+      - fluxbox # TODO: Better desktop setup.
+
+# https://guacamole.apache.org/doc/gug/installing-guacamole.html
+- name: Install packages for Guacamole server build deps
+  apt:
+    name:
+      - make
+      - autoconf # TODO: Determine if this is actually needed.
+      # Required
+      - libcairo2-dev
+      - libjpeg-turbo8-dev
+      - libpng12-dev
+      - libossp-uuid-dev
+      # Optional - ffmpeg
+      - libavcodec-dev
+      - libavutil-dev
+      - libswscale-dev
+      # Optional - Pango (SSH, Telnet support)
+      - libpango1.0-dev
+      # Optional - SSH support
+      - libssh2-1-dev
+      # Optional - VNC support
+      - libvncserver-dev
+      # Optional - PulseAudio
+      - libpulse-dev
+      # Optional - OpenSSL (TLS, SSH)
+      - libssl-dev
+      # Optional - Ogg Vorbis support
+      - libvorbis-dev
+      # Optional - WebP support
+      - libwebp-dev
+    state: present
+
+- name: Fetch guacamole-server source
+  get_url:
+    src: 'https://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.0.0/source/guacamole-server-1.0.0.tar.gz'
+    dest: /src/guacamole-server.tar.gz
+    # https://www.apache.org/dist/guacamole/1.0.0/source/guacamole-server-1.0.0.tar.gz.sha256
+    checksum: sha256:e50d513f5abb330722f2380d9cd5232a8c8055e646e0ec3bd394a72f46223556
+
+- name: Extract guacamole-server source
+  unarchive:
+    src: /src/guacamole-server.tar.gz
+    dest: /src/
+
+- name: Run guacamole-server ./configure script
+  command: ./configure
+  args:
+    # TODO: Avoid hard-coding the version here.
+    chdir: /src/guacamole-server-1.0.0
+
+- name: Build guacamole-server
+  command: make
+  args:
+    # TODO: Avoid hard-coding the version here.
+    chdir: /src/guacamole-server-1.0.0
+
+# TODO: Add systemd init script

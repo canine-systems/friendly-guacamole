@@ -1,0 +1,11 @@
+---
+- name: Perform a system upgrade
+  apt:
+    upgrade: safe
+
+- name: Install common packages
+  apt:
+    name:
+      - htop
+      - tmux
+    state: present
