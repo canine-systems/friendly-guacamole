@@ -15,7 +15,7 @@
       # Required
       - libcairo2-dev
       - libjpeg-turbo8-dev
-      - libpng12-dev
+      - libpng-dev
       - libossp-uuid-dev
       # Optional - ffmpeg
       - libavcodec-dev
