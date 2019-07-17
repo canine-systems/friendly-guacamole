@@ -1,0 +1,9 @@
+---
+- hosts: dev-vm
+  become: yes
+  become_method: sudo
+  roles:
+    - common
+    - user-accounts
+    - guacamole-server
+    - cloud-init
