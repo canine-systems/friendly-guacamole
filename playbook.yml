@@ -7,3 +7,4 @@
     - common
     - guacamole-server
     - user-accounts
+    - cloud-init

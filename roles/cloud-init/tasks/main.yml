@@ -1,0 +1,30 @@
+---
+# tasks file for cloud-init
+
+- name: Install cloud-init
+  apt:
+    name: cloud-init
+    state: latest
+
+- name: Delete invalid networking config (required for DO)
+  file:
+    path: /etc/cloud/cloud.cfg.d/50-curtin-networking.cfg
+    state: absent
+  notify:
+    - Clean cloud-init
+
+- name: Remove NoCloud from data sources
+  debconf:
+    name: cloud-init
+    question: cloud-init/datasources
+    value: ConfigDrive, OpenNebula, DigitalOcean, Azure, AltCloud, OVF, MAAS, GCE, OpenStack, CloudSigma, SmartOS, Bigstep, Scaleway, AliYun, CloudStack, Hetzner, IBMCloud, None
+    vtype: multiselect
+  notify:
+    - Clean cloud-init
+
+- name: Remove netplan file
+  file:
+    path: /etc/netplan/50-cloud-init.yaml
+    state: absent
+  notify:
+    - Clean cloud-init

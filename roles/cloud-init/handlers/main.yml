@@ -1,0 +1,5 @@
+---
+# handlers file for cloud-init
+
+- name: Clean cloud-init
+  command: cloud-init clean
