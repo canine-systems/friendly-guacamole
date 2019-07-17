@@ -4,7 +4,7 @@
 - name: Install cloud-init
   apt:
     name: cloud-init
-    state: latest
+    state: present
 
 - name: Delete invalid networking config (required for DO)
   file:
@@ -17,7 +17,10 @@
   debconf:
     name: cloud-init
     question: cloud-init/datasources
-    value: ConfigDrive, OpenNebula, DigitalOcean, Azure, AltCloud, OVF, MAAS, GCE, OpenStack, CloudSigma, SmartOS, Bigstep, Scaleway, AliYun, CloudStack, Hetzner, IBMCloud, None
+    value:
+      ConfigDrive, OpenNebula, DigitalOcean, Azure, AltCloud, OVF,
+      MAAS, GCE, OpenStack, CloudSigma, SmartOS, Bigstep, Scaleway,
+      AliYun, CloudStack, Hetzner, IBMCloud, None
     vtype: multiselect
   notify:
     - Clean cloud-init
