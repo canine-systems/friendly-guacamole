@@ -5,8 +5,6 @@
     append: yes
     shell: "/bin/bash"
     state: present
-  with_items: "{{ create_users }}"
-  register: users
 
 # TODO: Make it so the guacamole user can't connect via ssh.
 #- name: Expiring Passwords for new users (Linux)
