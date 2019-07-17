@@ -37,9 +37,14 @@
       - libwebp-dev
     state: present
 
+- name: Create /src
+  file:
+    path: /src
+    state: directory
+
 - name: Fetch guacamole-server source
   get_url:
-    src: 'https://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.0.0/source/guacamole-server-1.0.0.tar.gz'
+    url: 'https://apache.org/dyn/closer.cgi?action=download&filename=guacamole/1.0.0/source/guacamole-server-1.0.0.tar.gz'
     dest: /src/guacamole-server.tar.gz
     # https://www.apache.org/dist/guacamole/1.0.0/source/guacamole-server-1.0.0.tar.gz.sha256
     checksum: sha256:e50d513f5abb330722f2380d9cd5232a8c8055e646e0ec3bd394a72f46223556
@@ -48,6 +53,7 @@
   unarchive:
     src: /src/guacamole-server.tar.gz
     dest: /src/
+    remote_src: yes
 
 - name: Run guacamole-server ./configure script
   command: ./configure
