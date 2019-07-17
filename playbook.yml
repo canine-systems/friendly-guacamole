@@ -5,6 +5,6 @@
   become_method: sudo
   roles:
     - common
-    - guacamole-server
     - user-accounts
+    - guacamole-server
     - cloud-init
